@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
     title: 'Serapha',
     tagline: 'A lightweight, modular PHP framework utilizing modern practices with template engine and Sanite for easy database CRUD operations.',
-    favicon: 'static/img/favicon.ico',
+    favicon: 'img/favicon.ico',
 
     // Set the production url of your site here
     url: 'https://seraphalab.github.io',
@@ -49,12 +49,12 @@ const config: Config = {
 
     themeConfig: {
         // Replace with your project's social card
-        image: 'static/img/docusaurus-social-card.jpg',
+        image: 'img/docusaurus-social-card.jpg',
         navbar: {
             title: 'Serapha',
             logo: {
                 alt: 'Serapha Logo',
-                src: 'static/img/logo.svg',
+                src: 'img/logo.svg',
                 style: {
                     borderRadius: '50%',
                 }

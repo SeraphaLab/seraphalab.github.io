@@ -3,68 +3,101 @@ import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
-  title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+    title: string;
+    description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
-  {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
-  },
-  {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
-  },
+    {
+        title: 'Modern and Lightweight',
+        description: (
+            <>
+                Serapha is built with modern PHP 8 features and practices,
+                offering a lightweight, modular architecture to streamline your
+                development process.
+            </>
+        ),
+    },
+    {
+        title: 'Easy Integration',
+        description: (
+            <>
+                Integrated with Composer for easy dependency management and
+                rapid development, Serapha allows you to leverage a wide range
+                of libraries and tools effortlessly.
+            </>
+        ),
+    },
+    {
+        title: 'Rich Feature Set',
+        description: (
+            <>
+                Serapha includes robust features like a template engine, i18n
+                support, RESTful API integration, and advanced ORM capabilities,
+                making it suitable for diverse web development tasks.
+            </>
+        ),
+    },
+    {
+        title: 'Dependency Injection',
+        description: (
+            <>
+                Effortlessly manage your dependencies with Serapha's built-in
+                Dependency Injection container, simplifying your controller and
+                service management.
+            </>
+        ),
+    },
+    {
+        title: 'Redis Integration',
+        description: (
+            <>
+                Use Serapha's built-in support for Redis to manage caching and
+                other Redis-based features effortlessly, enhancing your
+                application's performance and scalability.
+            </>
+        ),
+    }
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
-  return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
+function Feature({ title, description, idx, chunkLength }: FeatureItem & { idx: number; chunkLength: number }) {
+    const offsetClass = (chunkLength === 2 && idx === 0) ? 'col--offset-2' : '';
+
+    return (
+        <div className={clsx('col col--4', offsetClass)}>
+            <div className="text--center padding-horiz--md">
+                <Heading as="h3">{title}</Heading>
+                <p>{description}</p>
+            </div>
+        </div>
+    );
 }
 
 export default function HomepageFeatures(): JSX.Element {
-  return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+    const chunkLength = 3;
+    // Function to chunk the feature list into groups of three
+    const chunkArray = (arr: FeatureItem[], size: number) => {
+        const result: FeatureItem[][] = [];
+        for (let i = 0; i < arr.length; i += size) {
+            result.push(arr.slice(i, i + size));
+        }
+
+        return result;
+    };
+
+    const chunkedFeatures = chunkArray(FeatureList, chunkLength);
+
+    return (
+        <section className={styles.features}>
+            <div className="container">
+                {chunkedFeatures.map((chunk, rowIndex) => (
+                    <div className="row margin-top--lg margin-bottom--lg" key={rowIndex}>
+                        {chunk.map((props, idx) => (
+                            <Feature key={idx} {...props} {...{ idx, chunkLength: chunk.length }} />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
 }

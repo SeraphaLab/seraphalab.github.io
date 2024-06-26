@@ -48,8 +48,6 @@ const config: Config = {
     ],
 
     themeConfig: {
-        // Replace with your project's social card
-        image: 'img/docusaurus-social-card.jpg',
         navbar: {
             title: 'Serapha',
             logo: {
@@ -75,31 +73,12 @@ const config: Config = {
         },
         footer: {
             style: 'dark',
-            links: [
-                {
-                    title: 'Docs',
-                    items: [
-                        {
-                            label: 'Document',
-                            to: '/docs/intro',
-                        },
-                    ],
-                },
-                {
-                    title: 'More',
-                    items: [
-                        {
-                            label: 'GitHub',
-                            href: 'https://github.com/SeraphaLab/Serapha',
-                        },
-                    ],
-                },
-            ],
             copyright: `Copyright © ${new Date().getFullYear()} SeraphaLab. Built with Docusaurus.`,
         },
         prism: {
             theme: prismThemes.github,
             darkTheme: prismThemes.dracula,
+            additionalLanguages: ['php', 'ini', 'json', 'yaml', 'apacheconf', 'bash', 'nginx', 'sql'],
         },
     } satisfies Preset.ThemeConfig,
 };

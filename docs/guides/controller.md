@@ -1,5 +1,5 @@
 ---
-id: controlle
+id: controller
 title: Controller
 sidebar_label: Controller
 sidebar_position: 1

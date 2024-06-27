@@ -22,15 +22,20 @@ Routes are defined using the `addRoute` method of the `Router` class. The `addRo
 Here is an example of defining routes in the `routes.php` file:
 
 ```php title="app/Route/routes.php"
-<?php
 /** @var \Serapha\Routing\Router $router */
 
-$router->addRoute('GET', '/', 'HomeController@index');
-$router->addRoute('GET', '/user/create', 'UserController@create');
-$router->addRoute('POST', '/user/create', 'UserController@store');
-$router->addRoute('GET', '/user/{id}', 'UserController@show');
-$router->addRoute('GET', '/login', 'AuthController@index');
-$router->addRoute('POST', '/login', 'AuthController'); // By default, calls index method
+use App\Controller\{
+    HomeController,
+    UserController,
+    AuthController
+};
+
+$router->get('/', HomeController::class); // By default, the 'index' method is calleds
+$router->get('/user/create', [UserController::class, 'create']);
+$router->post('/user/create', [UserController::class, 'store']);
+$router->addRoute('GET', '/user/{id}', [UserController::class, 'show']);
+$router->addRoute('GET', '/login', [AuthController::class, 'index']);
+$router->addRoute('POST', '/login', [AuthController::class]);
 ```
 
 ## URL Parameters

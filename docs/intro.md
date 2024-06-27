@@ -32,15 +32,18 @@ Whether you are building a small website or a large-scale web application, Serap
 
 Our documentation is structured to help you get up and running quickly and to provide in-depth guides on specific topics:
 
+### Getting Started
 - **[Installation](./getting-started/installation)**: Step-by-step guide to get Serapha running.
 - **[Configuration](./getting-started/configuration)**: Learn how to configure your environment.
 - **[Directory Structure](./getting-started/directory-structure)**: Understand the project structure.
-- **[Routing](./guides/routing)**: Learn about the routing system.
+
+### Guides
 - **[Controller](./guides/controller)**: How to handle HTTP requests.
 - **[Service](./guides/service)**: Organize your business logic into reusable services.
 - **[Model](./guides/model)**: Interact with the database.
-- **[View](./guides/view)**: Render HTML pages.
 - **[Middleware](./guides/middleware)**: Implement custom middleware.
+- **[Routing](./guides/routing)**: Learn about the routing system.
+- **[View](./guides/view)**: Render HTML pages.
 - **[Rewrite Rule](./guides/rewrite-rule)**: Customize URL rewriting rules.
 
 ## Get Involved

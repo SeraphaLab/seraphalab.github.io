@@ -39,7 +39,7 @@ cp .env.example .env
 Configure the database connection and other essential settings in the `.env` file.
 
 ### Step 4: Configure Folder Permissions
-Ensure that the `storage` and `bootstrap/cache` directories have the correct write permissions so that the framework can properly store logs and cache.
+Ensure that the `storage` directory have the correct write permissions so that the framework can properly store logs and cache.
 
 ## Step 5: Run Database Migrations
 

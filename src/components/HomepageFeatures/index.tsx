@@ -49,12 +49,22 @@ const FeatureList: FeatureItem[] = [
         ),
     },
     {
-        title: 'Redis Integration',
+        title: 'Redis Support',
         description: (
             <>
                 Use Serapha's built-in support for Redis to manage caching and
                 other Redis-based features effortlessly, enhancing your
                 application's performance and scalability.
+            </>
+        ),
+    },
+    {
+        title: 'Database Migration',
+        description: (
+            <>
+                Utilize <a href="https://github.com/cakephp/phinx">Phinx</a> for
+                hassle-free database schema migrations, ensuring your databases
+                stay up-to-date with versioned migrations.
             </>
         ),
     }

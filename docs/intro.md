@@ -11,6 +11,7 @@ sidebar_position: 1
 - **Modular Architecture**: Organize your code into manageable modules.
 - **Powerful Templating**: Utilize the built-in template engine for flexible and efficient templating.
 - **Database Abstraction**: Leverage [`carry0987/sanite`](https://github.com/carry0987/Sanite) for robust and easy database CRUD operations.
+- **Database Migration**: Utilize [`robmorgan/phinx`](https://github.com/cakephp/phinx) for hassle-free database schema migrations.
 - **Advanced Routing System**: Map URLs to specific controllers and actions with ease.
 - **Environment Configuration**: Manage different environments seamlessly with `.env` configuration support.
 - **Service Layer**: Organize your business logic into reusable services.

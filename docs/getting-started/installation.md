@@ -41,6 +41,34 @@ Configure the database connection and other essential settings in the `.env` fil
 ### Step 4: Configure Folder Permissions
 Ensure that the `storage` and `bootstrap/cache` directories have the correct write permissions so that the framework can properly store logs and cache.
 
+## Step 5: Run Database Migrations
+
+Serapha uses [`robmorgan/phinx`](https://github.com/cakephp/phinx) for database migrations. The configuration is already set up in `database/phinx.php`. Follow these steps to apply the migrations and seed your database:
+
+1. **Navigate to the Database Directory**: First, change to the `database` directory:
+
+```bash
+cd database
+```
+
+2. **Run Migrations**: Apply the migrations to your database using the following command:
+
+```bash
+../vendor/bin/phinx migrate
+```
+
+This command will execute the migrations defined in the `database/migrations` directory.
+
+3. **Run Seeders**: Populate the database with initial data by running the seeders:
+
+```bash
+../vendor/bin/phinx seed:run
+```
+
+This will execute the seed files defined in the `database/seeds` directory.
+
+Don't forget to check out the [Phinx documentation](https://book.cakephp.org/phinx/0/en/index.html) for more detailed information on how to use its full capabilities.
+
 ## Quick Start
 Start your application using the built-in PHP development server:
 ```sh

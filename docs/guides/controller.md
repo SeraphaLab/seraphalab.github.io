@@ -84,21 +84,18 @@ The `UserController` provides basic operations for user management.
 ```php title="app/Controller/UserController.php"
 namespace App\Controller;
 
-use Serapha\Routing\Router;
-use Serapha\Routing\Response;
 use Serapha\Service\ServiceLocator;
+use Serapha\Routing\Response;
 use App\Service\UserService;
 
 class UserController extends BaseController
 {
-    private Router $router;
     private Response $response;
     private UserService $userService;
 
-    public function __construct(Router $router, Response $response)
+    public function __construct(Response $response)
     {
         // Dependencies are injected automatically
-        $this->router = $router;
         $this->response = $response;
         $this->userService = ServiceLocator::get(UserService::class);
     }
@@ -116,12 +113,11 @@ In this example, the `show` method fetches user data and renders the user view.
 
 ## Dependency Injection
 
-Serapha supports Dependency Injection (DI), which means you can automatically resolve dependencies in your controllers. For example, in the `UserController`, `Router` and `Response` are injected automatically:
+Serapha supports Dependency Injection (DI), which means you can automatically resolve dependencies in your controllers. For example, `Response` are injected automatically in the `UserController` class:
 
 ```php
-public function __construct(Router $router, Response $response)
+public function __construct(Response $response)
 {
-    $this->router = $router;
     $this->response = $response;
     $this->userService = ServiceLocator::get(UserService::class);
 }

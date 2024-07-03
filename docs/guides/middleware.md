@@ -11,13 +11,13 @@ Middleware in Serapha allows you to filter and manipulate HTTP requests entering
 
 ## Basic Structure
 
-### `MiddlewareInterface` Interface
+### `Middleware` Base Class
 
-All middleware classes must implement the `MiddlewareInterface`, which defines a single method `handle`. This method will be executed for each request that the middleware is applied to.
+All middleware classes must extend the `Middleware` base class, which defines the `process` method. This method will be executed for each request that the middleware is applied to.
 
 ### Creating Middleware
 
-To create a middleware, implement the `MiddlewareInterface` and define your middleware logic within the `handle` method.
+To create a middleware, extend the `Middleware` class and define your middleware logic within the `process` method.
 
 #### Example: `AuthMiddleware`
 
@@ -26,23 +26,23 @@ The `AuthMiddleware` checks if a user is authenticated before allowing the reque
 ```php title="app/Middleware/AuthMiddleware.php"
 namespace App\Middleware;
 
-use Serapha\Middleware\MiddlewareInterface;
-use Serapha\Routing\Request;
 use Serapha\Routing\Response;
+use Serapha\Routing\Request;
+use Serapha\Routing\Handler;
+use Serapha\Middleware\Middleware;
 
-class AuthMiddleware implements MiddlewareInterface
+class AuthMiddleware extends Middleware
 {
-    public function handle(Request $request, Response $response, callable $next): Response
+    public function process(Request $request, Response $response, Handler $handler): Response
     {
         // Check if the user is logged in
         if (!isset($_SESSION['user'])) {
             // If not logged in, redirect to the login page
-            $response->redirect('/login');
-            return $response;
+            return $response->redirect('/login');
         }
 
         // If logged in, continue processing the request
-        return $next($request, $response);
+        return $handler->handle($request);
     }
 }
 ```
@@ -55,54 +55,40 @@ Middleware can be added to routes to be executed before the controller action is
 
 In this example, the `AuthMiddleware` is registered and run before the `create` action in the `UserController`.
 
-```php title="app/Controller/UserController.php"
-namespace App\Controller;
-
-use Serapha\Routing\Router;
-use Serapha\Routing\Response;
-use Serapha\Service\ServiceLocator;
+```php title="app/Route/routes.php"
+use App\Controller\{
+    HomeController,
+    UserController,
+    AuthController
+};
 use App\Middleware\AuthMiddleware;
-use App\Service\UserService;
+use Serapha\Routing\Route;
 
-class UserController extends BaseController
-{
-    private Router $router;
-    private Response $response;
-    private UserService $userService;
+// Regular routes
+Route::get('/', [HomeController::class, 'index']);
+Route::middleware(AuthMiddleware::class)->get('/user/create', [UserController::class, 'create']);
+Route::middleware(AuthMiddleware::class)->post('/user/create', [UserController::class, 'store']);
+Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/login', [AuthController::class, 'index']);
+Route::post('/login', [AuthController::class, 'store']);
 
-    public function __construct(Router $router, Response $response)
-    {
-        $this->router = $router;
-        $this->response = $response;
-        $this->userService = ServiceLocator::get(UserService::class);
-    }
-
-    public function create()
-    {
-        // Run middleware before processing the request
-        $this->router->runMiddleware(new AuthMiddleware())->send();
-
-        $username = 'john_doe';
-
-        // Business logic for creating a user
-        $data = [
-            //...
-        ];
-        $this->userService->registerUser($data);
-
-        // Redirect to user list page
-        return $this->response->redirect('/users');
-    }
-}
+// Middleware and group routes
+Route::middleware(AuthMiddleware::class)->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard']);
+        Route::get('/profile', [UserController::class, 'profile']);
+        Route::get('/settings', [UserController::class, 'settings']);
+    });
+});
 ```
 
 ### Global Middleware
 
-You can also add global middleware that will be executed for every request. To add global middleware, use the `addMiddleware` method on the `Router` instance.
+You can also add global middleware that will be executed for every request. To add global middleware, use the `middleware` method on the `Router` instance.
 
 ```php
-$router = $this->container->get(Router::class);
-$router->addMiddleware(new AuthMiddleware());
+$router = $core->getContainer()->get(Router::class);
+$router->middleware([AuthMiddleware::class]);
 ```
 
 ### Middleware Stack
@@ -114,13 +100,15 @@ Serapha allows you to run a stack of middleware for each request. The middleware
 In this example, multiple middleware can be stacked and executed in sequence.
 
 ```php
-$router->addMiddleware(new MiddlewareOne());
-$router->addMiddleware(new MiddlewareTwo());
-$router->dispatch('/some-route');
+$router->middleware([
+    MiddlewareOne::class,
+    MiddlewareTwo::class
+]);
+$router->handleRequest();
 ```
 
 ## Conclusion
 
-Middleware in Serapha provides a powerful mechanism to handle common tasks such as authentication, logging, and request modification. By implementing the `MiddlewareInterface` and using the `Router` to manage middleware, you can easily extend and secure your application.
+Middleware in Serapha provides a powerful mechanism to handle common tasks such as authentication, logging, and request modification. By extending the `Middleware` class and using the `Router` to manage middleware, you can easily extend and secure your application.
 
 By following this guide, you should be able to create and apply middleware effectively in your Serapha application.

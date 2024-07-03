@@ -79,21 +79,18 @@ The `UserController` demonstrates how to use `UserService` for user-related oper
 ```php title="app/Controller/UserController.php"
 namespace App\Controller;
 
-use Serapha\Routing\Router;
-use Serapha\Routing\Response;
 use Serapha\Service\ServiceLocator;
+use Serapha\Routing\Response;
 use App\Service\UserService;
 
 class UserController extends BaseController
 {
-    private Router $router;
     private Response $response;
     private UserService $userService;
 
-    public function __construct(Router $router, Response $response)
+    public function __construct(Response $response)
     {
         // Dependencies are injected automatically
-        $this->router = $router;
         $this->response = $response;
         $this->userService = ServiceLocator::get(UserService::class);
     }

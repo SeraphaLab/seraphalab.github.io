@@ -29,6 +29,7 @@ REDIS_DATABASE=0
 
 # Path
 CONFIG_FILE=/app/Config/config.inc.php
+ROUTE_PATH=/app/Route
 LANG_PATH=/app/Language
 CACHE_PATH=/storage/cache
 
@@ -110,10 +111,11 @@ REDIS_DATABASE=0
 
 ### Path Configuration
 
-Define paths for configuration files, language files, and cache:
+Define paths for configuration files, route directory, language files, and cache:
 
 ```ini
 CONFIG_FILE=/app/Config/config.inc.php
+ROUTE_PATH=/app/Route
 LANG_PATH=/app/Language
 CACHE_PATH=/storage/cache
 ```

@@ -73,6 +73,12 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'store']);
 
+// Route without controller
+Route::get('/test/{param}', function (string $param = 'World') {
+    echo 'Hello ' . $param;
+    return;
+})->where('param', '[0-9a-zA-Z]+');
+
 // Middleware and group routes
 Route::prefix('admin')->middleware(AuthMiddleware::class)->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard']);
@@ -82,7 +88,13 @@ Route::prefix('admin')->middleware(AuthMiddleware::class)->group(function () {
 
 // API routes
 Route::prefix('api')->group(function () {
-    Route::get('/user/{id}', [APIController::class]);
+    Route::get('/user/{param}', [APIController::class, 'param'])->where('param', '[a-z]+');
+    Route::get('/user/{id}/{name?}', [APIController::class, 'show'])->where(
+        [
+            'id' => '[0-9]+',
+            'name' => '[a-zA-Z]+'
+        ]
+    );
     Route::get('/user/create', [APIController::class, 'index']);
 });
 ```
@@ -114,6 +126,7 @@ $router->handleRequest();
 
 ## Conclusion
 
-Middleware in Serapha provides a powerful mechanism to handle common tasks such as authentication, logging, and request modification. By extending the `Middleware` class and using the `Router` to manage middleware, you can easily extend and secure your application.
+Middleware in Serapha provides a powerful mechanism to handle common tasks such as authentication, logging, and request modification.
+By extending the `Middleware` class and using the `Router` to manage middleware, you can easily extend and secure your application.
 
 By following this guide, you should be able to create and apply middleware effectively in your Serapha application.

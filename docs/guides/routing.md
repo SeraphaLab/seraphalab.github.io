@@ -39,6 +39,12 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'store']);
 
+// Route without controller
+Route::get('/test/{param}', function (string $param = 'World') {
+    echo 'Hello ' . $param;
+    return;
+})->where('param', '[0-9a-zA-Z]+');
+
 // Middleware and group routes
 Route::prefix('admin')->middleware(AuthMiddleware::class)->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard']);
@@ -48,14 +54,20 @@ Route::prefix('admin')->middleware(AuthMiddleware::class)->group(function () {
 
 // API routes
 Route::prefix('api')->group(function () {
-    Route::get('/user/{id}', [APIController::class]);
+    Route::get('/user/{param}', [APIController::class, 'param'])->where('param', '[a-z]+');
+    Route::get('/user/{id}/{name?}', [APIController::class, 'show'])->where(
+        [
+            'id' => '[0-9]+',
+            'name' => '[a-zA-Z]+'
+        ]
+    );
     Route::get('/user/create', [APIController::class, 'index']);
 });
 ```
 
 ## URL Parameters
 
-You can define routes with URL parameters by using curly braces `{}`. The parameters will be passed to the controller action.
+You can define routes with URL parameters by using curly braces `{}`. The parameters will be passed to the controller action. You can also use the `where` method to apply regular expression constraints to the parameters.
 
 ### Example: Route with URL Parameter
 
@@ -64,6 +76,42 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 ```
 
 In this example, when a request is made to `/user/123`, the `show` method of the `UserController` will be called with `123` as the parameter.
+
+### Example: Route with URL Parameter and Regular Expression
+
+```php
+Route::get('/user/{param}', [APIController::class, 'param'])->where('param', '[a-z]+');
+```
+
+In this example, when a request is made to `/user/abc`, the `param` method of the `APIController` will be called with `abc` as the parameter. Only alphabetic characters are allowed due to the regular expression constraint.
+
+### Example: Route with Multiple Parameters and Regular Expressions
+
+```php
+Route::get('/user/{id}/{name?}', [APIController::class, 'show'])->where(
+    [
+        'id' => '[0-9]+',
+        'name' => '[a-zA-Z]+'
+    ]
+);
+```
+
+In this example, when a request is made to `/user/123/John`, the `show` method of the `APIController` will be called with `123` and `John` as the parameters. Only numeric characters are allowed for `id` and only alphabetic characters for `name`.
+
+## Route without Controller
+
+You can also define routes that do not map to a controller, but instead directly execute a closure.
+
+### Example: Route without Controller and Regular Expression
+
+```php
+Route::get('/test/{param}', function (string $param = 'World') {
+    echo 'Hello ' . $param;
+    return;
+})->where('param', '[0-9a-zA-Z]+');
+```
+
+In this example, when a request is made to `/test/1234abc`, the closure will be executed and it will output `Hello 1234abc`. Only alphanumeric characters are allowed due to the regular expression constraint.
 
 ## Route Middleware
 
@@ -135,6 +183,7 @@ In this file, the router is retrieved from the container, routes are registered,
 
 ## Conclusion
 
-By using the routing system in Serapha, you can efficiently map URLs to controller actions, handle URL parameters, apply middleware, and group routes. This provides a flexible and powerful way to manage the routing logic of your application.
+By using the routing system in Serapha, you can efficiently map URLs to controller actions, handle URL parameters, apply middleware, and group routes.
+This provides a flexible and powerful way to manage the routing logic of your application.
 
 By following this guide, you should be able to define and manage routes effectively in your Serapha application.

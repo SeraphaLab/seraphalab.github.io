@@ -20,16 +20,11 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
         listen 80;
         server_name example.com;
 
-        root /path/to/your/project; # Replace with your actual project path
-        index index.php index.html index.htm;
+        root /srv/example.com/public; # Replace with your actual project path
+        index index.php index.html;
 
         location / {
-            try_files $uri $uri/ /public/index.php?$query_string;
-        }
-
-        # Universal rewrite rule to redirect all URLs to the query parameter
-        location / {
-            rewrite ^/(.*)$ /public/index.php?query=/$1 last;
+            try_files $uri $uri/ /index.php?query=$uri;
         }
 
         location ~ \.php$ {
@@ -49,7 +44,7 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
 
     ```nginx
     location / {
-        rewrite ^/(.*)$ /public/index.php?query=/$1 last;
+        try_files $uri $uri/ /index.php?query=$uri;
     }
     ```
 
@@ -82,7 +77,7 @@ To set up URL rewriting in Apache, you can either modify the `.htaccess` file or
         # General rewrite rule to handle all URL paths and convert them to query parameters
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule ^(.*)$ /public/index.php?query=/$1 [L]
+        RewriteRule ^(.*)$ /index.php?query=/$1 [L]
     </IfModule>
     ```
 
@@ -93,9 +88,9 @@ To set up URL rewriting in Apache, you can either modify the `.htaccess` file or
     ```apacheconf
     <VirtualHost *:80>
         ServerName example.com
-        DocumentRoot /path/to/your/project  # Replace with your actual project path
+        DocumentRoot /srv/example.com/public  # Replace with your actual project path
 
-        <Directory /path/to/your/project>
+        <Directory /srv/example.com/public>
             Options Indexes FollowSymLinks
             AllowOverride All
             Require all granted
@@ -107,7 +102,7 @@ To set up URL rewriting in Apache, you can either modify the `.htaccess` file or
             # General rewrite rule to handle all URL paths and convert them to query parameters
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteCond %{REQUEST_FILENAME} !-d
-            RewriteRule ^(.*)$ /public/index.php?query=/$1 [L]
+            RewriteRule ^(.*)$ /index.php?query=/$1 [L]
         </IfModule>
     </VirtualHost>
     ```
@@ -119,10 +114,10 @@ The key rewrite rule here is:
 ```apacheconf
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /public/index.php?query=/$1 [L]
+RewriteRule ^(.*)$ /index.php?query=/$1 [L]
 ```
 
-These rules will rewrite all requests that are not files or directories to `/public/index.php`, and will include the original requested URL path as part of the query parameter.
+These rules will rewrite all requests that are not files or directories to `/index.php`, and will include the original requested URL path as part of the query parameter.
 
 ### Deployment
 

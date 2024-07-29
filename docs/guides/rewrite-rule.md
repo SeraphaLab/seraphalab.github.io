@@ -24,7 +24,7 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
         index index.php index.html;
 
         location / {
-            try_files $uri $uri/ /index.php?query=$uri;
+            try_files $uri $uri/ /index.php?query=$uri&$args;
         }
 
         location ~ \.php$ {
@@ -44,7 +44,7 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
 
     ```nginx
     location / {
-        try_files $uri $uri/ /index.php?query=$uri;
+        try_files $uri $uri/ /index.php?query=$uri&$args;
     }
     ```
 

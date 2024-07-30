@@ -7,7 +7,7 @@ sidebar_position: 7
 
 # URL Rewrite Rule
 
-To optimize your URLs for better readability and SEO purposes, you can transform URLs of the format `example.com/public/?query=/user/123` to `example.com/user/123`. Below are the necessary rewrite rules for both Nginx and Apache servers.
+To optimize your URLs for better readability and SEO purposes, you can transform URLs of the format `example.com/public/?/user/123` to `example.com/user/123`. Below are the necessary rewrite rules for both Nginx and Apache servers.
 
 ## Nginx
 
@@ -24,7 +24,7 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
         index index.php index.html;
 
         location / {
-            try_files $uri $uri/ /index.php?query=$uri&$args;
+            try_files $uri $uri/ /index.php?$query_string;
         }
 
         location ~ \.php$ {
@@ -44,7 +44,7 @@ To set up URL rewriting in Nginx, modify your Nginx configuration file, typicall
 
     ```nginx
     location / {
-        try_files $uri $uri/ /index.php?query=$uri&$args;
+        try_files $uri $uri/ /index.php?$query_string;
     }
     ```
 
@@ -77,7 +77,7 @@ To set up URL rewriting in Apache, you can either modify the `.htaccess` file or
         # General rewrite rule to handle all URL paths and convert them to query parameters
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule ^(.*)$ /index.php?query=/$1 [L]
+        RewriteRule ^(.*)$ index.php?/$1 [L]
     </IfModule>
     ```
 
@@ -102,7 +102,7 @@ To set up URL rewriting in Apache, you can either modify the `.htaccess` file or
             # General rewrite rule to handle all URL paths and convert them to query parameters
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteCond %{REQUEST_FILENAME} !-d
-            RewriteRule ^(.*)$ /index.php?query=/$1 [L]
+            RewriteRule ^(.*)$ index.php?/$1 [L]
         </IfModule>
     </VirtualHost>
     ```
@@ -114,7 +114,7 @@ The key rewrite rule here is:
 ```apacheconf
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php?query=/$1 [L]
+RewriteRule ^(.*)$ index.php?/$1 [L]
 ```
 
 These rules will rewrite all requests that are not files or directories to `/index.php`, and will include the original requested URL path as part of the query parameter.
@@ -133,8 +133,6 @@ These rules will rewrite all requests that are not files or directories to `/ind
 
 ### Verification
 
-Access `http://example.com/test/123` and ensure it is being rewritten to `http://example.com/public/index.php?query=/test/123`.
+Access `http://example.com/test/123` and ensure it is being rewritten to `http://example.com/public/index.php?/test/123`.
 
----
-
-By following these steps, you will have a detailed guide available to help you understand and implement the necessary Nginx and Apache rewrite rules for your Serapha framework application.
+By following these steps, you will have a detailed guide available to help you understand and implement the necessary Apache rewrite rules for your Serapha framework application.

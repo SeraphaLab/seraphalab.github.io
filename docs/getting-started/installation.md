@@ -67,7 +67,9 @@ This command will execute the migrations defined in the `database/migrations` di
 
 This will execute the seed files defined in the `database/seeds` directory.
 
+:::tip
 Don't forget to check out the [Phinx documentation](https://book.cakephp.org/phinx/0/en/index.html) for more detailed information on how to use its full capabilities.
+:::
 
 ## Quick Start
 Start your application using the built-in PHP development server:

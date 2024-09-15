@@ -50,7 +50,9 @@ If you prefer an interactive installation process, the `install` directory offer
 
 3. **Run the Install**: Submit the form to automatically run the migrations, seed the database, and set up initial configurations.
 
+:::tip
 This step is optional; you can instead choose to manually run the migrations and seeders as explained in the next section.
+:::
 
 ### Step 6: Run Database Migrations
 

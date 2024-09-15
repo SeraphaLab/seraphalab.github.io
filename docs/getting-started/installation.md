@@ -15,6 +15,7 @@ Before starting the installation, make sure your system meets the following requ
 - PHP 8.1 or higher
 - Composer
 - Supported development environment such as Apache, Nginx, or the built-in PHP server
+- (Optional) Node.js and pnpm (for building front-end assets)
 
 ## Installation Steps
 
@@ -42,13 +43,20 @@ Configure the database connection and other essential settings in the `.env` fil
 Ensure that the `storage` directory have the correct write permissions so that the framework can properly store logs and cache.
 
 ### Step 5: Installation via Web UI (Optional)
-If you prefer an interactive installation process, the `install` directory offers a web-based UI. Follow these steps:
 
-1. **Access the Installation Page**: After starting the PHP server (as shown in the Quick Start section), navigate to `http://localhost:8000/install/index.php` in your browser.
-   
-2. **Complete the Form**: Fill out the required information, such as the admin account details.
+You can use the `install` directory for a web-based installation UI. This requires some manual customization:
 
-3. **Run the Install**: Submit the form to automatically run the migrations, seed the database, and set up initial configurations.
+1. **Customize Server-side Logic**: In `install/include/class/Installer.php`, like the `startCreateAdmin` method or others, add your business logic, such as creating an administrator account. This approach prevents sensitive data, like passwords, from being hardcoded in seed files.
+
+2. **Customize and Build Front-end Logic**: If modifications are made to `install/template/dist/ts/install.ts`, rebuild the assets by navigating to the `install/template` directory and running:
+
+```sh
+pnpm build
+```
+
+3. **Access the Installation Page**: Start your PHP server (see the Quick Start section for instructions) and navigate to `http://localhost:8000/install/index.php` in your browser.
+
+4. **Complete the Installation**: Fill out the necessary information in the form and submit it to automatically run migrations, seed the database, and perform initial setup steps.
 
 :::tip
 This step is optional; you can instead choose to manually run the migrations and seeders as explained in the next section.

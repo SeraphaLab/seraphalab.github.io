@@ -41,7 +41,18 @@ Configure the database connection and other essential settings in the `.env` fil
 ### Step 4: Configure Folder Permissions
 Ensure that the `storage` directory have the correct write permissions so that the framework can properly store logs and cache.
 
-## Step 5: Run Database Migrations
+### Step 5: Installation via Web UI (Optional)
+If you prefer an interactive installation process, the `install` directory offers a web-based UI. Follow these steps:
+
+1. **Access the Installation Page**: After starting the PHP server (as shown in the Quick Start section), navigate to `http://localhost:8000/install/index.php` in your browser.
+   
+2. **Complete the Form**: Fill out the required information, such as the admin account details.
+
+3. **Run the Install**: Submit the form to automatically run the migrations, seed the database, and set up initial configurations.
+
+This step is optional; you can instead choose to manually run the migrations and seeders as explained in the next section.
+
+### Step 6: Run Database Migrations
 
 Serapha uses [`robmorgan/phinx`](https://github.com/cakephp/phinx) for database migrations. The configuration is already set up in `database/phinx.php`. Follow these steps to apply the migrations and seed your database:
 

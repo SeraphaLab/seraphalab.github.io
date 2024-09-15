@@ -41,19 +41,35 @@ This directory contains database-related files.
 - `phinx.php` - Phinx configuration file for database migrations.
 - `seeds` - Database seeders.
 
+## install
+
+The `install` directory is optional and allows the customization of a web-based UI for installation purposes. It executes migrations and seeds using Phinx. This directory can be removed if not needed.
+
+- `api.php` - Handles API requests related to the installation.
+- `include` - Core installation logic.
+    - `Core.php` - Core installer functions.
+    - `class` - Installer classes.
+        - `API.php` - API handling for the installer.
+        - `Installer.php` - Main installation logic.
+        - `Language.php` - Language handling for the installer.
+        - `ProcessPhinx.php` - Phinx process handling.
+- `index.php` - Entry file for the installer.
+- `language` - Language files specific to the installer.
+- `template` - Source files for the installation UI.
+
 ## public
 
 This directory contains publicly accessible files, such as the web server's document root.
 
 - `index.php` - Application entry file.
-- `assets` - Public assets (CSS, JS, Images).
+- `asset` - Public assets (CSS, JS, Images).
 
 ## storage
 
 This directory contains files for storage, such as uploads and logs.
 
 - `cache` - Cached files.
-- `logs` - Log files.
+- `log` - Log files.
 - `upload` - Uploaded files.
 
 ## Summary
@@ -62,6 +78,7 @@ Each directory and file in the Serapha framework serves a specific purpose, maki
 
 - `app` contains all the application-specific code.
 - `database` deals with database operations, migrations, and seeders.
+- `install` provides an optional, customizable web-based installation UI.
 - `public` is the web-accessible directory containing entry points and assets.
 - `storage` handles cached files, logs, and uploads.
 

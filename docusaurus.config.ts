@@ -31,12 +31,16 @@ const config: Config = {
 
     presets: [
         [
-            'classic',
+            '@docusaurus/preset-classic',
             {
+                sitemap: {
+                    changefreq: 'weekly',
+                    priority: 0.5,
+                },
                 docs: {
                     sidebarPath: './sidebars.ts',
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
+                    showLastUpdateAuthor: true,
+                    showLastUpdateTime: true,
                     editUrl:
                         'https://github.com/SeraphaLab/seraphalab.github.io/tree/main/',
                 },
@@ -75,10 +79,29 @@ const config: Config = {
             style: 'dark',
             copyright: `Copyright © ${new Date().getFullYear()} SeraphaLab. Built with Docusaurus.`,
         },
+        colorMode: {
+            defaultMode: 'light',
+            disableSwitch: false,
+            respectPrefersColorScheme: true,
+        },
         prism: {
-            theme: prismThemes.github,
-            darkTheme: prismThemes.dracula,
+            theme: prismThemes.oneDark,
+            darkTheme: prismThemes.oneDark,
             additionalLanguages: ['php', 'ini', 'json', 'yaml', 'apacheconf', 'bash', 'nginx', 'sql'],
+        },
+        algolia: {
+            appId: 'TLWF61FQC2',
+            apiKey: '6ec45419a7334dddfbff735d9c6ccf54',
+            indexName: 'carry0987io',
+            contextualSearch: true,
+            externalUrlRegex: 'external\\.com|domain\\.com',
+            replaceSearchResultPathname: {
+                from: '/docs/',
+                to: '/docs/',
+            },
+            searchParameters: {},
+            searchPagePath: 'search',
+            insights: false,
         },
     } satisfies Preset.ThemeConfig,
 };

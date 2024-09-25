@@ -90,9 +90,9 @@ const config: Config = {
             additionalLanguages: ['php', 'ini', 'json', 'yaml', 'apacheconf', 'bash', 'nginx', 'sql'],
         },
         algolia: {
-            appId: 'TLWF61FQC2',
-            apiKey: '6ec45419a7334dddfbff735d9c6ccf54',
-            indexName: 'carry0987io',
+            appId: 'WR1II1JEI5',
+            apiKey: '450d5fd0c750ac1cd38366f342ebce04',
+            indexName: 'seraphalabio',
             contextualSearch: true,
             externalUrlRegex: 'external\\.com|domain\\.com',
             replaceSearchResultPathname: {

@@ -36,13 +36,13 @@ class AuthMiddleware extends Middleware
     public function process(Request $request, Response $response, Handler $handler): Response
     {
         // Check if the user is logged in
-        if (!isset($_SESSION['user'])) {
+        if ($this->sessionManager->get('user') === null) {
             // If not logged in, redirect to the login page
             return $response->redirect('/login');
         }
 
         // If logged in, continue processing the request
-        return $handler->handle($request);
+        return $handler->handle($request, $response);
     }
 }
 ```

@@ -27,6 +27,7 @@ This directory contains the application-specific code.
 - `Language` - Language files for internationalization (i18n).
 - `Middleware` - Middleware for request processing.
 - `Model` - Models for database interactions.
+- `Provider` - Service providers for dependency injection.
 - `Route` - Routing definitions.
     - `routes.php` - Defines all web routes.
 - `Service` - Application services.

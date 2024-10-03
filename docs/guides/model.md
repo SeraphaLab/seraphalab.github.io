@@ -83,9 +83,9 @@ class UserModel extends Model
 }
 ```
 
-## Using Dependency Injection with Models
+## Dependency Injection
 
-Serapha supports dependency injection for models, making it easy to manage dependencies within your models.
+Serapha supports Dependency Injection (DI) for models, making it easy to manage dependencies within your models.
 
 ### Example: Using DI in Models
 

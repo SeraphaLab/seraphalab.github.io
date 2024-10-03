@@ -2,7 +2,7 @@
 id: rewrite-rule
 title: URL Rewrite Rule
 sidebar_label: Rewrite Rule
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # URL Rewrite Rule

@@ -124,6 +124,32 @@ $router->middleware([
 $router->handleRequest();
 ```
 
+## Dependency Injection
+
+Serapha supports Dependency Injection (DI) for middleware, making it easy to manage dependencies within your middleware.
+
+### Example: Using DI in Middleware
+
+```php
+namespace App\Middleware;
+
+use Serapha\Middleware\Middleware;
+use carry0987\SessionManager\SessionManager;
+
+class ExampleMiddleware extends Middleware
+{
+    private SessionManager $session;
+
+    public function __construct(SessionManager $session)
+    {
+        $this->session = $session;
+        // Your middleware logic here
+    }
+
+    // Define other methods for your middleware
+}
+```
+
 ## Conclusion
 
 Middleware in Serapha provides a powerful mechanism to handle common tasks such as authentication, logging, and request modification.

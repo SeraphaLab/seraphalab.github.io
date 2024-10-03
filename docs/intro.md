@@ -42,6 +42,7 @@ Our documentation is structured to help you get up and running quickly and to pr
 - **[Service](./guides/service)**: Organize your business logic into reusable services.
 - **[Model](./guides/model)**: Interact with the database.
 - **[Middleware](./guides/middleware)**: Implement custom middleware.
+- **[Provider](./guides/provider)**: Manage service providers.
 - **[Routing](./guides/routing)**: Learn about the routing system.
 - **[View](./guides/view)**: Render HTML pages.
 - **[Rewrite Rule](./guides/rewrite-rule)**: Customize URL rewriting rules.

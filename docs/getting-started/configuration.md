@@ -29,12 +29,10 @@ REDIS_DATABASE=0
 
 # Path
 CONFIG_FILE=/app/Config/config.inc.php
+PROVIDER_FILE=/app/Config/provider.inc.php
 ROUTE_PATH=/app/Route
 LANG_PATH=/app/Language
 CACHE_PATH=/storage/cache
-
-# URL Rewrite
-URL_REWRITE=false
 ```
 
 ### Setting Up Your Environment
@@ -115,6 +113,7 @@ Define paths for configuration files, route directory, language files, and cache
 
 ```ini
 CONFIG_FILE=/app/Config/config.inc.php
+PROVIDER_FILE=/app/Config/provider.inc.php
 ROUTE_PATH=/app/Route
 LANG_PATH=/app/Language
 CACHE_PATH=/storage/cache

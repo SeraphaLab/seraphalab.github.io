@@ -38,7 +38,7 @@ class AuthMiddleware extends Middleware
         // Check if the user is logged in
         if ($this->sessionManager->get('user') === null) {
             // If not logged in, redirect to the login page
-            return $response->redirect('/login');
+            return $response->withRedirect('/login');
         }
 
         // If logged in, continue processing the request
@@ -64,6 +64,7 @@ use App\Controller\{
 };
 use App\Middleware\AuthMiddleware;
 use Serapha\Routing\Route;
+use Serapha\Routing\Response;
 
 // Regular routes
 Route::get('/', [HomeController::class]);
@@ -74,9 +75,11 @@ Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'store']);
 
 // Route without controller
-Route::get('/test/{param}', function (string $param = 'World') {
-    echo 'Hello ' . $param;
-    return;
+Route::get('/test/{param}', static function (string $param = 'World'): Response {
+    $response = new Response();
+    $response->getBody()->write('Hello ' . $param);
+
+    return $response;
 })->where('param', '[0-9a-zA-Z]+');
 
 // Middleware and group routes

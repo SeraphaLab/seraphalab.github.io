@@ -30,6 +30,7 @@ use App\Controller\{
 };
 use App\Middleware\AuthMiddleware;
 use Serapha\Routing\Route;
+use Serapha\Routing\Response;
 
 // Regular routes
 Route::get('/', [HomeController::class]);
@@ -40,9 +41,11 @@ Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'store']);
 
 // Route without controller
-Route::get('/test/{param}', function (string $param = 'World') {
-    echo 'Hello ' . $param;
-    return;
+Route::get('/test/{param}', static function (string $param = 'World'): Response {
+    $response = new Response();
+    $response->getBody()->write('Hello ' . $param);
+
+    return $response;
 })->where('param', '[0-9a-zA-Z]+');
 
 // Middleware and group routes
@@ -105,13 +108,15 @@ You can also define routes that do not map to a controller, but instead directly
 ### Example: Route without Controller and Regular Expression
 
 ```php
-Route::get('/test/{param}', function (string $param = 'World') {
-    echo 'Hello ' . $param;
-    return;
+Route::get('/test/{param}', static function (string $param = 'World'): Response {
+    $response = new Response();
+    $response->getBody()->write('Hello ' . $param);
+
+    return $response;
 })->where('param', '[0-9a-zA-Z]+');
 ```
 
-In this example, when a request is made to `/test/1234abc`, the closure will be executed and it will output `Hello 1234abc`. Only alphanumeric characters are allowed due to the regular expression constraint.
+In this example, when a request is made to `/test/1234abc`, the closure returns a response whose body contains `Hello 1234abc`. Only alphanumeric characters are allowed due to the regular expression constraint.
 
 ## Route Middleware
 

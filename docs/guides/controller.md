@@ -7,7 +7,7 @@ sidebar_position: 1
 
 # Controller
 
-Controllers in Serapha handle HTTP requests and generate responses. They act as the intermediary between the client and the backend logic.
+Controllers in Serapha handle HTTP requests and generate responses. Controller actions must return a `Serapha\Routing\Response`; the framework emits it after the middleware pipeline completes.
 
 ## Basic Structure
 
@@ -63,19 +63,26 @@ The `HomeController` handles the homepage requests and renders the main view.
 ```php title="app/Controller/HomeController.php"
 namespace App\Controller;
 
+use Serapha\Routing\Response;
+
 class HomeController extends BaseController
 {
-    public function index()
+    public function index(): Response
     {
         $data = [
             'hello' => 'Hello, World!'
         ];
 
+        ob_start();
         $this->template->render(['header_common.html', 'view_index.html', 'footer_common.html'], $data);
+        $response = new Response();
+        $response->getBody()->write((string) ob_get_clean());
+
+        return $response;
     }
 }
 ```
-In this example, the `index` method prepares the data and renders the view using the template engine.
+In this example, the `index` method captures the template output, writes it to the response body, and returns the response.
 
 ### `UserController`
 
@@ -100,16 +107,20 @@ class UserController extends BaseController
         $this->userService = ServiceLocator::get(UserService::class);
     }
 
-    public function show(string|int $id)
+    public function show(string|int $id): Response
     {
         $user = $this->userService->getUserProfile((int) $id);
         $data = ['user' => $user];
 
+        ob_start();
         $this->template->render(['header_common.html', 'view_user.html', 'footer_common.html'], $data);
+        $this->response->getBody()->write((string) ob_get_clean());
+
+        return $this->response;
     }
 }
 ```
-In this example, the `show` method fetches user data and renders the user view.
+In this example, the `show` method fetches user data, writes the rendered view to the response body, and returns the injected response.
 
 ## Dependency Injection
 

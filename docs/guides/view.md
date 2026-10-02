@@ -51,16 +51,22 @@ In the `HomeController`, the `index` method prepares the data and renders the vi
 ```php title="app/Controller/HomeController.php"
 namespace App\Controller;
 
+use Serapha\Routing\Response;
+
 class HomeController extends BaseController
 {
-    public function index()
+    public function index(): Response
     {
         $data = [
             'hello' => 'Hello, World!'
         ];
 
-        // Render templates with data
+        ob_start();
         $this->template->render(['header_common.html', 'view_index.html', 'footer_common.html'], $data);
+        $response = new Response();
+        $response->getBody()->write((string) ob_get_clean());
+
+        return $response;
     }
 }
 ```

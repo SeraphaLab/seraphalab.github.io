@@ -95,17 +95,21 @@ class UserController extends BaseController
         $this->userService = ServiceLocator::get(UserService::class);
     }
 
-    public function show(string|int $id)
+    public function show(string|int $id): Response
     {
         $user = $this->userService->getUserProfile((int) $id);
         $data = ['user' => $user];
 
+        ob_start();
         $this->template->render(['header_common.html', 'view_user.html', 'footer_common.html'], $data);
+        $this->response->getBody()->write((string) ob_get_clean());
+
+        return $this->response;
     }
 }
 ```
 
-In this example, `UserService` is retrieved using `ServiceLocator` and is used to fetch the user profile and render the user view.
+In this example, `UserService` is retrieved using `ServiceLocator` to fetch the user profile. The controller writes the rendered view to its response body and returns the response.
 
 ## Dependency Injection
 
